@@ -1,0 +1,17 @@
+[GENERATED OBJECT FILE]
+b__main.o
+[PROJECT FILES]
+/Users/user/common/Ada/AoC2020/Day1/default.gpr
+20201201053353 a7a5724973bdc156f6e460f4b3b10dfb
+[BOUND OBJECT FILES]
+/Users/user/common/Ada/AoC2020/Day1/obj/main.o
+[GENERATED SOURCE FILES]
+b__main.ads
+b__main.adb
+b__main.ali
+[RESULTING OPTIONS]
+-L/Users/user/common/Ada/AoC2020/Day1/obj/
+-L/Users/user/common/Ada/AoC2020/Day1/obj/
+-L/users/user/opt/gnat/2020/lib/gcc/x86_64-apple-darwin17.7.0/8.4.1/adalib/
+-static
+/users/user/opt/gnat/2020/lib/gcc/x86_64-apple-darwin17.7.0/8.4.1/adalib/libgnat.a

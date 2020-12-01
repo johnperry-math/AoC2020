@@ -1,0 +1,85 @@
+V "GNAT Lib v2020"
+M P W=b
+A -gnatA
+A -mtune=core2
+A -mmacosx-version-min=10.15.0
+A -fPIC
+P ZX
+
+RN
+RV NO_IO
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U main%b		main.adb		db13d377 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z interfaces%s		interfac.ads		interfac.ali
+
+D ada.ads		20200228061809 76789da1 ada%s
+D a-except.ads		20200228061809 a7106115 ada.exceptions%s
+D a-inteio.ads		20200228061809 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20200228061809 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20200228061809 119b8fb3 ada.streams%s
+D a-tags.ads		20200228061809 edddc8f0 ada.tags%s
+D a-textio.ads		20200228061809 aef4d56d ada.text_io%s
+D a-tiinio.ads		20200228061809 390edddb ada.text_io.integer_io%s
+D a-unccon.ads		20200228061809 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20200228061809 5ab55268 interfaces%s
+D i-cstrea.ads		20200228061809 e53d8b8e interfaces.c_streams%s
+D main.adb		20201201064935 83ac8fbe main%b
+D system.ads		20200228061809 085b6ffb system%s
+D s-crtl.ads		20200228061809 0ebbdb71 system.crtl%s
+D s-exctab.ads		20200228061809 54135002 system.exception_table%s
+D s-ficobl.ads		20200228061809 078245e4 system.file_control_block%s
+D s-parame.ads		20200228061809 4752c4cb system.parameters%s
+D s-secsta.ads		20200327060539 9b3ab94b system.secondary_stack%s
+D s-soflin.ads		20200228061809 a7318a92 system.soft_links%s
+D s-stache.ads		20200228061809 a37c21ec system.stack_checking%s
+D s-stalib.ads		20200228061809 6b7a13f2 system.standard_library%s
+D s-stoele.ads		20200228061809 2dc34a04 system.storage_elements%s
+D s-traent.ads		20200228061809 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20200319060539 5ecf7212 system.unsigned_types%s
+D s-wchcon.ads		20200228061809 1b7d22d2 system.wch_con%s
+G a e
+G c Z b b [main standard 17 11 none]
+X 1 ada.ads
+16K9*Ada 20e8 12|11r6 12r5 14r6 15r5
+X 3 a-inteio.ads
+18K13*Integer_Text_IO[8|46] 12|14w10 15r9
+X 7 a-textio.ads
+57K13*Text_IO 727e16 12|11w10 12r9
+64P9*File_Type 12|19r8
+66n23*In_File{66E9} 12|32r16 55r16
+114U14*Open 12|32s7 55s7
+129U14*Close 12|37s7 60s7
+264U14*New_Line 12|41s50 69s68 70s68 86s38 88s38
+312V13*End_Of_File{boolean} 12|33s17 56s17
+465U14*Put 12|41s4 69s24 69s44 70s24 70s44 85s30 85s50 85s70 87s30 87s50
+. 87s70
+X 8 a-tiinio.ads
+51U14*Get 12|34s10[3|18] 57s10[3|18]
+80U14*Put 12|41s33[3|18] 69s16[3|18] 69s36[3|18] 69s56[3|18] 70s16[3|18]
+. 70s36[3|18] 70s56[3|18] 85s22[3|18] 85s42[3|18] 85s62[3|18] 86s22[3|18]
+. 87s22[3|18] 87s42[3|18] 87s62[3|18] 88s22[3|18]
+X 12 main.adb
+17U11*Main 17b11 97l5 97t9
+19p4 F{7|64P9} 32m13 32r13 33r29 34r14 37m13 37r13 55m13 55r13 56r29 57r15
+. 60m13 60r13
+20i4 Array_Size{natural} 35m10 35r24 41r37 47r31 64r36 66r43 77r36 79r43
+. 82r49
+28i7 A{natural} 34m17
+47a7 Expenses(positive) 57m18 57r18 65r15 67r18 78r15 80r18 83r24
+48i7 C{positive} 65m10 68r16 69r20 69r60 70r20 70r60 78m10 81r16 84r22 85r26
+. 86r26 87r26 88r26
+48i10 D{positive} 67m13 68r20 69r40 69r64 70r40 70r64 80m13 81r20 84r26 85r46
+. 86r30 87r46 88r30
+48i13 E{positive} 83m19 84r30 85r66 86r34 87r66 88r34
+49i7 I{positive} 57r27 58m10 58r15
+64i11 I{integer} 65r24 66r34
+66i14 J{integer} 67r27
+77i11 I{integer} 78r24 79r34
+79i14 J{integer} 80r27 82r40
+82i20 K{integer} 83r33
+

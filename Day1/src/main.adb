@@ -3,6 +3,9 @@
 -- John Perry
 -- reworked based on advice from Emmanuel Briot and Maxim Reznick
 --
+-- later realized / learned that Hashed_Sets may be a bad idea due to
+-- repeated values, so switching to Vectors
+--
 -- apologies for any bad Ada style
 --
 -- read expense entries from a file (they look to be integers)
@@ -15,28 +18,21 @@ use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 use Ada.Integer_Text_IO;
 
-with Ada.Containers;
-use Ada.Containers;
-
-with Ada.Containers.Hashed_Sets;
+with Ada.Containers.Vectors;
 
 procedure Main is
 
    F : File_Type;
 
-   function Hash ( Value: Positive ) return Hash_Type is
-      ( Hash_Type'Mod( Value ) );
-
-   package Positive_Sets is new Ada.Containers.Hashed_Sets
+   package Positive_Vectors is new Ada.Containers.Vectors
    (
-    Element_Type        => Positive,
-    Hash                => Hash,
-    Equivalent_Elements => "="
+    Element_Type => Natural,
+    Index_Type   => Positive
    );
 
-   Expenses: Positive_Sets.Set;
+   Expenses: Positive_Vectors.Vector;
 
-   A, C, D, E : Positive;
+   A, B, C : Natural;
 
 begin
 
@@ -45,23 +41,28 @@ begin
    Open( F, In_File, "/Users/user/common/Ada/AoC2020/Day1/input.txt" );
    while not End_Of_File(F) loop
       Get( F, A );
-      Expenses.Insert(A);
+      Expenses.Append(A);
    end loop;
    Close(F);
 
    -- identify two numbers that sum to 2020 and report their product
 
    Outer_2:
-   for A in Expenses.Iterate loop
+   for I in Expenses.First_Index .. Expenses.Last_Index - 1 loop
 
-      C := Positive_Sets.Element(A);
-      if C < 2020 then
-         D := 2020 - C;
-         if Expenses.Contains(D) then
-            Put(C); Put(" + "); Put(D); Put(" = "); Put(C + D); New_Line(1);
-            Put(C); Put(" * "); Put(D); Put(" = "); Put(C * D); New_Line(1);
-            exit Outer_2;
-         end if;
+      A := Expenses(I);
+      if A <= 2020 then
+         B := 2020 - A;
+
+         Inner_2:
+         for J in I + 1 .. Expenses.Last_Index loop
+            if Expenses(J) = B then
+               Put(A); Put(" + "); Put(B); Put(" = "); Put(A + B); New_Line(1);
+               Put(A); Put(" * "); Put(B); Put(" = "); Put(A * B); New_Line(1);
+               exit Outer_2;
+            end if;
+         end loop Inner_2;
+
       end if;
 
    end loop Outer_2;
@@ -69,27 +70,31 @@ begin
    -- now identify three numbers that sum to 2020 and report their product
 
    Outer_3:
-   for A in Expenses.Iterate loop
+   for I in Expenses.First_Index .. Expenses.Last_Index - 2 loop
 
-      C := Positive_Sets.Element(A);
+      A := Expenses(I);
 
-      Inner:
-      for B in Expenses.Iterate loop
+      Middle_3:
+      for J in I + 1 .. Expenses.Last_Index - 1 loop
 
-         D := Positive_Sets.Element(B);
+         B := Expenses(J);
 
-         if ( C + D < 2020 ) then
-            E := 2020 - ( C + D );
-            if Expenses.Contains(E) then
-               Put(C); Put(" + "); Put(D); Put(" + "); Put(E); Put(" = ");
-               Put(C + D + E); New_Line(1);
-               Put(C); Put(" * "); Put(D); Put(" * "); Put(E); Put(" = ");
-               Put(C * D * E); New_Line(1);
-               exit Outer_3;
-            end if;
+         if ( A + B <= 2020 ) then
+            C := 2020 - ( A + B );
+
+            Inner_3:
+            for K in J + 1 .. Expenses.Last_Index loop
+               if Expenses(K) = C then
+                  Put(A); Put(" + "); Put(B); Put(" + "); Put(C); Put(" = ");
+                  Put(A + B + C); New_Line(1);
+                  Put(A); Put(" + "); Put(B); Put(" + "); Put(C); Put(" = ");
+                  Put(A * B * C); New_Line(1);
+                  exit Outer_3;
+               end if;
+            end loop Inner_3;
          end if;
 
-      end loop Inner;
+      end loop Middle_3;
 
    end loop Outer_3;
 

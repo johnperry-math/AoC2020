@@ -1,6 +1,7 @@
 -- Advent of Code 2020, Day 1
 --
 -- John Perry
+-- reworked based on advice from Emmanuel Briot and Maxim Reznick
 --
 -- apologies for any bad Ada style
 --
@@ -14,84 +15,82 @@ use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 use Ada.Integer_Text_IO;
 
+with Ada.Containers;
+use Ada.Containers;
+
+with Ada.Containers.Hashed_Sets;
+
 procedure Main is
 
    F : File_Type;
-   Array_Size : Natural := 0;
+
+   function Hash ( Value: Positive ) return Hash_Type is
+      ( Hash_Type'Mod( Value ) );
+
+   package Positive_Sets is new Ada.Containers.Hashed_Sets
+   (
+    Element_Type        => Positive,
+    Hash                => Hash,
+    Equivalent_Elements => "="
+   );
+
+   Expenses: Positive_Sets.Set;
+
+   A, C, D, E : Positive;
 
 begin
 
-   -- count the entries
+   -- read the entries
 
-   declare
+   Open( F, In_File, "/Users/user/common/Ada/AoC2020/Day1/input.txt" );
+   while not End_Of_File(F) loop
+      Get( F, A );
+      Expenses.Insert(A);
+   end loop;
+   Close(F);
 
-      A : Natural;
+   -- identify two numbers that sum to 2020 and report their product
 
-   begin
+   Outer_2:
+   for A in Expenses.Iterate loop
 
-      Open( F, In_File, "/Users/user/common/Ada/AoC2020/Day1/input.txt" );
-      while not End_Of_File(F) loop
-         Get(F, A);
-         Array_Size := Array_Size + 1;
-      end loop;
-      Close(F);
+      C := Positive_Sets.Element(A);
+      if C < 2020 then
+         D := 2020 - C;
+         if Expenses.Contains(D) then
+            Put(C); Put(" + "); Put(D); Put(" = "); Put(C + D); New_Line(1);
+            Put(C); Put(" * "); Put(D); Put(" = "); Put(C * D); New_Line(1);
+            exit Outer_2;
+         end if;
+      end if;
 
-   end; -- declare
+   end loop Outer_2;
 
-   Put("number of expenses: "); Put(Array_Size); New_Line(1);
+   -- now identify three numbers that sum to 2020 and report their product
 
-   -- create an array and perform the exercises
+   Outer_3:
+   for A in Expenses.Iterate loop
 
-   declare
+      C := Positive_Sets.Element(A);
 
-      Expenses : array ( 1 .. Array_Size ) of Positive;
-      C, D, E : Positive;
-      I : Positive := 1;
+      Inner:
+      for B in Expenses.Iterate loop
 
-   begin
+         D := Positive_Sets.Element(B);
 
-      -- read the entries
-
-      Open( F, In_File, "/Users/user/common/Ada/AoC2020/Day1/input.txt" );
-      while not End_Of_File(F) loop
-         Get( F, Expenses(I) );
-         I := I + 1;
-      end loop;
-      Close(F);
-
-      -- identify two numbers that sum to 2020 and report their product
-
-      for I in Positive range 1 .. Array_Size - 1 loop
-         C := Expenses(I);
-         for J in Positive range I + 1 .. Array_Size loop
-            D := Expenses(J);
-            if C + D = 2020 then
-               Put(C); Put(" + "); Put(D); Put(" = "); Put(C + D); New_Line(1);
-               Put(C); Put(" * "); Put(D); Put(" = "); Put(C * D); New_Line(1);
+         if ( C + D < 2020 ) then
+            E := 2020 - ( C + D );
+            if Expenses.Contains(E) then
+               Put(C); Put(" + "); Put(D); Put(" + "); Put(E); Put(" = ");
+               Put(C + D + E); New_Line(1);
+               Put(C); Put(" * "); Put(D); Put(" * "); Put(E); Put(" = ");
+               Put(C * D * E); New_Line(1);
+               exit Outer_3;
             end if;
-         end loop; -- j
-      end loop; -- i
+         end if;
 
-      -- now identify three numbers that sum to 2020 and report their product
+      end loop Inner;
 
-      for I in Positive range 1 .. Array_Size - 2 loop
-         C := Expenses(I);
-         for J in Positive range I + 1 .. Array_Size - 1 loop
-            D := Expenses(J);
-            if C + D < 2020 then
-               for K in Positive range J + 1 .. Array_Size loop
-                  E := Expenses(K);
-                  if C + D + E = 2020 then
-                     Put(C); Put(" + "); Put(D); Put(" + "); Put(E); Put(" = ");
-                     Put(C + D + E); New_Line(1);
-                     Put(C); Put(" * "); Put(D); Put(" * "); Put(E); Put(" = ");
-                     Put(C * D * E); New_Line(1);
-                  end if;
-               end loop; -- k
-            end if;
-         end loop; -- j
-      end loop; -- i
-
-   end; -- declare
+   end loop Outer_3;
 
 end Main;

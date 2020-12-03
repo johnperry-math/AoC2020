@@ -9,3 +9,7 @@ Expense report, completed.
 ## Day 2
 
 Password validation, completed.
+
+## Day 3
+
+Trees a downhilling toboggan might encounter, completed.

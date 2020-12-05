@@ -17,3 +17,7 @@ Trees a downhilling toboggan might encounter, completed.
 ## Day 4
 
 Checking validity of passports, completed. Kind of early to have an exercise drive one mad.
+
+## Day 5
+
+Lost your boarding bass; try to find your seat, completed.

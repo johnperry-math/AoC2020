@@ -108,7 +108,8 @@ begin
             Maximum_Seat_Number, Seat_Number(Pass)
          );
       end loop;
-      Put("the maximum seat number is "); Put(Maximum_Seat_Number); New_Line(1);
+      Put("the maximum seat number is "); Put(Maximum_Seat_Number, 0);
+      New_Line(1);
 
       -- part 2: determine the missing seat, which is +1 or -1 from any seat
       -- between those listed
@@ -133,6 +134,8 @@ begin
          Seat := 1;
          while not Seat_Is_Occupied(Seat) loop Seat := Seat + 1; end loop;
 
+         Put("the first occupyable (?) seat is "); Put(Seat, 0); New_Line(1);
+
          -- now find a missing seat, pretend it's yours (hopefully it is)
 
          while Seat <= Seat_Is_Occupied'Length and Seat_Is_Occupied(Seat)
@@ -140,7 +143,7 @@ begin
             Seat := Seat + 1;
          end loop;
 
-         Put("your seat number is "); Put(Seat); New_Line(1);
+         Put("your seat number is "); Put(Seat, 0); New_Line(1);
 
       end;
 

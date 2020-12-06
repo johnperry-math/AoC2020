@@ -17,15 +17,12 @@
 -- answered affirmatively, then add the g_i for each group i
 --
 -- inspired by Maxim Reznick's solution to Day 4,
--- for this day I decided to rework my original solution using Ada.Strings.Maps
+-- for this day I decided to rework my original soluton using Ada.Strings.Maps
 -- I *really* like the result, though I wonder about efficiency
---
--- then, based on a conversation on comp.lang.ada, I took Jeffrey Carter's
--- suggestion to rework this using Ada.Containers.Hash_Sets
 --
 -- the strategy will be this: convert each line to the set S of characters
 -- that appear on that line. take the union of S with the set A of characters
--- to which someone has responded (initially A is the empty set for each group)
+-- to which someone has responded (initially A is the null set for each group)
 -- and the intersection of S with the set E of characters to which everyone
 -- has responded (initially E is the set { 'a', ..., 'z' } for each group).
 -- after each group finishes, add the sizes of A and E to their respective
@@ -37,7 +34,8 @@ use Ada.Text_IO;
 with Ada.Integer_Text_IO;
 use Ada.Integer_Text_IO;
 
-with Ada.Containers.Hashed_Sets;
+with Ada.Strings.Maps;
+use Ada.Strings.Maps;
 
 procedure Main is
 
@@ -47,29 +45,7 @@ procedure Main is
    Questions_Someone_Responded: Natural := 0;
    Questions_Everyone_Responded: Natural := 0;
 
-   function Hash(C: Character) return Ada.Containers.Hash_Type is
-         ( Ada.Containers.Hash_Type(Character'Pos(C)) );
-
-   package Char_Sets is new Ada.Containers.Hashed_Sets
-         (
-          Element_Type        => Character,
-          Hash                => Hash,
-          Equivalent_Elements => "="
-         );
-   use Char_Sets;
-
-   Universe: Set;
-
-   procedure Initialize_Universe is
-   begin
-      for Each in Character range 'a' .. 'z' loop
-         Universe.Insert(Each);
-      end loop;
-   end Initialize_Universe;
-
 begin
-
-   Initialize_Universe;
 
    Open(F, In_File, "/Users/user/common/Ada/AoC2020/Day6/input.txt");
 
@@ -79,12 +55,14 @@ begin
       Process_Group:
       declare
 
+         subtype Char_Set is Character_Set;
          -- questions responded affirmatively by anyone in group
          -- start empty, add characters when someone responds
-         Anyone: Set := Empty_Set;
+         Anyone: Char_Set := Null_Set;
          -- questions responded affirmatively by everyone in group
          -- start full, remove characters when no one responds
-         Everyone: Set := Universe;
+         Lower_Case_Range: Character_Range :=  ( Low => 'a', High => 'z' );
+         Everyone: Char_Set := To_Set( Lower_Case_Range );
 
       begin
 
@@ -95,7 +73,7 @@ begin
             declare
 
                S: String := Get_Line(F);
-               This_One: Set := Empty_Set;
+               This_One: Char_Set;
 
             begin
 
@@ -108,8 +86,7 @@ begin
                -- especially when compared to my original solution
                -- in main_original.adb
 
-               for C of S loop This_One.Insert(C); end loop;
-
+               This_One := To_Set(S);
                Anyone := Anyone or This_One;
                Everyone := Everyone and This_One;
 
@@ -122,9 +99,9 @@ begin
          -- I wish it were possible to count the number of characters in a set
          -- without converting it to a sequence first
          Questions_Someone_Responded
-               := Questions_Someone_Responded + Natural(Anyone.Length);
+               := Questions_Someone_Responded + To_Sequence(Anyone)'Length;
          Questions_Everyone_Responded
-               := Questions_Everyone_Responded + Natural(Everyone.Length);
+               := Questions_Everyone_Responded + To_Sequence(Everyone)'Length;
 
       end Process_Group;
 

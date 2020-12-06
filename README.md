@@ -21,3 +21,7 @@ Checking validity of passports, completed. Kind of early to have an exercise dri
 ## Day 5
 
 Lost your boarding bass; try to find your seat, completed.
+
+## Day 6
+
+Help people fill out customs forms, completed.

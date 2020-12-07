@@ -32,3 +32,4 @@ Acquainted myself with Strings.Maps and Containers.Hash_Sets.
 
 Strange regulations about bags that can contain other bags, completed.
 Acquainted myself with Containers.Maps and "for all" expressions.
+Also learned about initializing records with default values.

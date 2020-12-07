@@ -189,7 +189,8 @@ begin
 
                   Second_Pos: Positive
                         := Ada.Strings.Fixed.Index(S, "bag", Pos);
-                  New_Entry: Bag_Entry;
+                  New_Entry: Bag_Entry
+                        := ( Quantity => Quantity, Description => <> );
 
                begin
 

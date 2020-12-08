@@ -26,10 +26,11 @@ Lost your boarding bass; try to find your seat, completed.
 ## Day 6: Custom Customs
 
 Help people fill out customs forms, completed.
-Acquainted myself with Strings.Maps and Containers.Hash_Sets.
+Acquainted myself with `Strings.Maps` and `Containers.Hash_Sets`.
 
 ## Day 7: Handy Haversacks
 
 Strange regulations about bags that can contain other bags, completed.
-Acquainted myself with Containers.Maps and "for all" expressions.
-Also learned about initializing records with default values.
+Acquainted myself with `Containers.Maps` and **`for all`** expressions.
+Also learned about initializing records with default values
+(use `=> <>`).

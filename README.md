@@ -34,3 +34,9 @@ Strange regulations about bags that can contain other bags, completed.
 Acquainted myself with `Containers.Maps` and **`for all`** expressions.
 Also learned about initializing records with default values
 (use `=> <>`).
+
+## Day 8: Handheld Halting
+
+Debugging a child's handheld, stuck on an infinite loop, completed.
+Didn't find anything really new to do this time, aside from
+`Pack` an `array` of `Boolean`.

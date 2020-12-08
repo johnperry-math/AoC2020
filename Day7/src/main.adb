@@ -38,7 +38,7 @@ procedure Main is
    subtype Bag_Description is String(1..20);
 
    type Bag_Entry is record
-      Description: Bag_Description := "                    ";
+      Description: Bag_Description := ( others => ' ' );
       Quantity: Positive;
    end record;
 

@@ -32,11 +32,12 @@ Acquainted myself with `Strings.Maps` and `Containers.Hash_Sets`.
 
 Strange regulations about bags that can contain other bags, completed.
 Acquainted myself with `Containers.Maps` and **`for all`** expressions.
-Also learned about initializing records with default values
-(use `=> <>`).
+Also learned about initializing records with default values (use `=> <>`).
+On Jeffrey Carter's advice I changed a constant, fixed-length string
+from "                    " to others => ' '.
 
 ## Day 8: Handheld Halting
 
 Debugging a child's handheld, stuck on an infinite loop, completed.
-Didn't find anything really new to do this time, aside from
-`Pack` an `array` of `Boolean`.
+This time I `Pack`'d an `array` of `Boolean`
+and used `renames` to create a reference.

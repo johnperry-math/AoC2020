@@ -41,3 +41,11 @@ from "                    " to others => ' '.
 Debugging a child's handheld, stuck on an infinite loop, completed.
 This time I `Pack`'d an `array` of `Boolean`
 and used `renames` to create a reference.
+
+## Day 9: Encoding Error
+
+Find the weakness in an encryption scheme, completed.
+The numbers grow larger than `Natural`, so I used `Long_Long_Integer`.
+(Probably could have gotten away with `Long_Integer`.)
+After solving it, I replaced a `Boolean` and three `if`'s in the first exercise
+with labels and `goto`s. I'm not convinced that either is easier to follow.

@@ -18,6 +18,9 @@
 -- I kept screwing up my logic on the first exercise, and the example didn't
 -- reveal my error, so this took a lot longer than it should have
 --
+-- Thanks to Maxim Reznick for pointing out an error in part 2, due entirely
+-- to my misreading the problem.
+--
 
 with Ada.Text_IO;
 use Ada.Text_IO;
@@ -109,7 +112,8 @@ begin
 
    -- second exercise:
    -- find a contiguous sequence of numbers that add up to our bad number
-   -- then report sum of first, last numbers in sequence
+   -- then report sum of largest, smallest numbers in sequence
+   -- (in original version I misread directions & added first and last)
 
    for I in 1 .. Positive( Previous_List.Length ) loop
 
@@ -120,16 +124,17 @@ begin
 
       begin
 
+         A := Previous_List(I);
+         B := Previous_List(I);
+
          while Current_Sum < Current_Number loop
             Current_Sum := Current_Sum + Previous_List(J);
+            A := Long_Long_Integer'Min(A, Previous_List(J));
+            B := Long_Long_Integer'Max(B, Previous_List(J));
             J := J + 1;
          end loop;
 
-         if Current_Sum = Current_Number then
-            A := Previous_List(I);
-            B := Previous_List(J - 1);
-            exit;
-         end if;
+         if Current_Sum = Current_Number then exit; end if;
 
       end;
 

@@ -56,3 +56,10 @@ Find the number of ways to arrange some adapters.
 I think this is the first time we can actually apply a non-brute-force solution.
 My approach is not complete, however, so I defined an `exception` which,
 amazingly enough, was not needed.
+
+## Day 11: Seating System
+
+Essentially a variant on the game of Life.
+I defined a `function` type, made use of labeled arguments,
+and eschewed the use of `Vector`s in favor of two-dimensional `array`s,
+which means I encountered Ada's `'Length(N)` attribute.

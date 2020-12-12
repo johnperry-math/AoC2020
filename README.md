@@ -64,3 +64,17 @@ I defined a `function` type, made use of labeled arguments,
 and eschewed the use of `Vector`s in favor of two-dimensional `array`s,
 which means I encountered Ada's `'Length(N)` attribute.
 Later updated to use `task`s, with improvements in timing!
+
+## Day 12: Rain Risk
+
+Cool, we get to work with the sidewalk metric!
+Essentially we just follow some directions to figure out where we're going,
+with different answers depending on how one understands the directions.
+The first is egocentric (directions are relative to me!);
+the second is relative to a waypoint.
+I made heavy use of enumerations, especially in the first part,
+where I used an two-dimensional array indexed by an enumeration
+to avoid if statements.
+There were also lots of `case` statements.
+In fact, there's not a single `if` statement in the whole program,
+which is probably not impressive, but it does amuse me.

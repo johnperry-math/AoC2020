@@ -235,6 +235,7 @@ procedure Main is
    procedure Perform_Round(
          Source: in Chart_Array;
          Result: out Chart_Array;
+         First, Last: Positive;
          Differ: out Boolean;
          Method: Checking_Function;
          Intolerance: Positive
@@ -248,7 +249,7 @@ procedure Main is
    --    a set to become empty
    is
 
-      M: constant Positive := Source'Length(1);
+      -- M: constant Positive := Source'Length(1);
       N: constant Positive := Source'Length(2);
 
    begin
@@ -256,7 +257,8 @@ procedure Main is
       Differ := False; -- must detect a change
 
       Rows:
-      for I in 1 .. M loop
+      -- for I in 1 .. M loop
+      for I in First .. Last loop
 
          Columns:
          for J in 1 .. N loop
@@ -297,6 +299,146 @@ procedure Main is
 
    end Perform_Round;
 
+   procedure Distribute_Performance(
+         Source: in Chart_Array;
+         Result: out Chart_Array;
+         Differ: out Boolean;
+         Method: Checking_Function;
+         Intolerance: Positive := 4
+   )
+   -- distribute analysis of the chart to tasks
+   is
+
+      M: constant Positive := Source'Length(1);
+      N: constant Positive := Source'Length(2);
+
+      -- a task type for working in parallel
+
+      task type Performer_Task is
+
+         entry Start(First, Last: Positive);
+         -- this task will consider only the rows First .. Last
+
+         entry Pass; -- if there is nothing to do for this Performer
+
+         entry Report(Differ: out Boolean); -- when done
+
+      end Performer_Task;
+
+      task body Performer_Task is
+
+         Something_Changed: Boolean := False; -- in case something changed
+
+         Passing: Boolean := False; -- in case we need not analyze
+
+         My_First, My_Last: Positive;
+
+      begin
+
+         loop
+
+            select
+
+               accept Start(First, Last: Positive)
+               do
+                  My_First := First;
+                  My_Last := Last;
+               end Start;
+
+            or
+
+               accept Pass do Passing := True; end;
+
+            or
+
+               terminate;
+
+            end select;
+
+            if not Passing then
+
+               Perform_Round(
+                             Source, Result, My_First, My_Last,
+                             Something_Changed, Method, Intolerance
+                            );
+
+            end if;
+
+            accept Report(Differ: out Boolean) do
+               Differ := Something_Changed;
+            end Report;
+
+         end loop;
+
+      end Performer_Task;
+
+      -- task creation
+      -- this problem seems to work best with two/three tasks, perhaps because
+      -- the data is relatively small
+      -- (
+      --  for me, single-threaded takes roughly 0.26s;
+      --  two/three Performers take roughly .19s,
+      --  four Performers take roughly .21s,
+      --  five/six Performers take roughly .22s,
+      --  seven Performers take roughly .23s, etc.
+      -- )
+
+      Number_Performers: constant Positive := 7;
+      Performers: array( 1 .. Number_Performers + 1 ) of Performer_Task;
+
+      -- combinatorics of the tasks
+
+      Per_Performer: constant Positive := M / Number_Performers;
+      Starts: array( 1 .. Number_Performers + 1 ) of Positive;
+      Stops: array( 1 .. Number_Performers + 1 ) of Positive;
+      First, Last: Positive := 1; -- where each task will start & stop
+
+      Performer_Differ: Boolean; -- whether a particular performer
+                                 -- notices a difference
+   begin
+
+      -- Put(M, 0); Put(" total rows"); New_Line(1);
+      -- Put(Per_Performer, 0); Put(" rows per performer"); New_Line(1);
+
+      -- figure out where each performer starts & stops
+
+      for I in 1 .. Number_Performers loop
+
+         while Last - First + 1 < Per_Performer loop
+            Last := Last + 1;
+         end loop;
+
+         Starts(I) := First; Stops(I) := Last;
+         First := Last + 1;
+         Last := First;
+
+      end loop;
+
+      -- start the main performers
+
+      for I in 1 .. Number_Performers loop
+         Performers(I).Start(Starts(I), Stops(I));
+      end loop;
+
+      -- start the cleanup performer
+
+      if Last <= M then
+         Performers(Number_Performers + 1).Start(Last, M);
+      else
+         Performers(Number_Performers + 1).Pass;
+      end if;
+
+      -- get the results
+
+      Differ := False;
+
+      for I in 1 .. Number_Performers + 1 loop
+         Performers(I).Report(Performer_Differ);
+         Differ := Differ or Performer_Differ;
+      end loop;
+
+   end Distribute_Performance;
+
    procedure Iterate_Seating(
          Chart: in out Chart_Array;
          Method: Checking_Function;
@@ -319,23 +461,51 @@ procedure Main is
 
       Changed: Boolean := True; -- whether the seating chart changed on a loop
 
+      In_Parallel: constant Boolean := False; -- change this next variable
+                                              -- for Parallel or Serial
+
    begin
 
       while Changed loop
 
-         if Changing_First then Perform_Round(
-                                              Source => Chart1,
-                                              Result => Chart2,
-                                              Differ => Changed,
-                                              Method => Method,
-                                              Intolerance => Intolerance
-                                             );
-         else Perform_Round(
-                            Source => Chart2, Result => Chart1,
-                            Differ => Changed,
-                            Method => Method,
-                            Intolerance => Intolerance
-                           );
+         if In_Parallel then
+
+            if Changing_First then Distribute_Performance(
+                                                    Source      => Chart1,
+                                                    Result      => Chart2,
+                                                    Differ      => Changed,
+                                                    Method      => Method,
+                                                    Intolerance => Intolerance
+                                                   );
+            else Distribute_Performance(
+                                        Source      => Chart2, Result => Chart1,
+                                        Differ      => Changed,
+                                        Method      => Method,
+                                        Intolerance => Intolerance
+                                       );
+
+            end if;
+
+         else
+
+            if Changing_First then Perform_Round(
+                                                 Source      => Chart1,
+                                                 Result      => Chart2,
+                                                 First       => 1,
+                                                 Last        => M,
+                                                 Differ      => Changed,
+                                                 Method      => Method,
+                                                 Intolerance => Intolerance
+                                                );
+            else Perform_Round(
+                               Source      => Chart2, Result => Chart1,
+                               First       => 1, Last => M,
+                               Differ      => Changed,
+                               Method      => Method,
+                               Intolerance => Intolerance
+                              );
+            end if;
+
          end if;
 
          Changing_First := not Changing_First; -- switch buffers

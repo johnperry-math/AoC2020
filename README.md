@@ -52,14 +52,15 @@ with labels and `goto`s. I'm not convinced that either is easier to follow.
 
 ## Day 10: Adapter Array
 
-Find the number of ways to arrange some adapters.
+Find the number of ways to arrange some adapters, completed.
 I think this is the first time we can actually apply a non-brute-force solution.
 My approach is not complete, however, so I defined an `exception` which,
 amazingly enough, was not needed.
 
 ## Day 11: Seating System
 
-Essentially a variant on the game of Life.
+Essentially a variant on the game of Life, completed.
 I defined a `function` type, made use of labeled arguments,
 and eschewed the use of `Vector`s in favor of two-dimensional `array`s,
 which means I encountered Ada's `'Length(N)` attribute.
+Later updated to use `task`s, with improvements in timing!

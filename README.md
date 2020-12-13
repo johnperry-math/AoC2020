@@ -78,3 +78,14 @@ to avoid if statements.
 There were also lots of `case` statements.
 In fact, there's not a single `if` statement in the whole program,
 which is probably not impressive, but it does amuse me.
+
+
+## Day 13: Shuttle Search
+
+Find various intersections of shuttles whose circulation time
+is a prime number of minutes.
+I used variant records to distinguish between shuttles that are in service and
+are not.
+Unfortunately, while the answer fits in `Long_Long_Integer`,
+some intermediate expressions do not,
+so I was naughty and used the GNAT `System.Bignum` package.

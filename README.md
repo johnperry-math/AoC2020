@@ -88,4 +88,4 @@ I used variant records to distinguish between shuttles that are in service and
 are not.
 Unfortunately, while the answer fits in `Long_Long_Integer`,
 some intermediate expressions do not,
-so I was naughty and used the GNAT `System.Bignum` package.
+so I had ("got"?) to use Ada2020's `Ada.Numerics.Big_Numbers` package.

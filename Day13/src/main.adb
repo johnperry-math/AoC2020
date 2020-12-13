@@ -9,6 +9,8 @@
 -- it seemed more appropriate to put description of problems below
 -- than to put them here
 
+pragma Ada_2020;
+
 with Ada.Text_IO;
 use Ada.Text_IO;
 
@@ -17,27 +19,16 @@ use Ada.Integer_Text_IO;
 
 with Ada.Containers.Vectors;
 
--- here I become naughty.
--- GPS won't like this under standard settings but it WILL make
--- Ada 202x will have a Big_Numbers library with Big_Integers
--- so we won't have issues with portability
+-- unfortunately, this requires big integers for intermediate steps
 
-with System.Bignums;
-use System.Bignums;
+with Ada.Numerics.Big_Numbers.Big_Integers;
+use Ada.Numerics.Big_Numbers.Big_Integers;
 
 procedure Main is
 
    -- I/O
 
    F: File_Type;
-
-   -- enable ordinary arithmetic operators for Bignum
-
-   function "+"   ( A, B: Bignum ) return Bignum is ( Big_Add( A, B ) );
-   function "-"   ( A, B: Bignum ) return Bignum is ( Big_Sub( A, B ) );
-   function "*"   ( A, B: Bignum ) return Bignum is ( Big_Mul( A, B ) );
-   function "/"   ( A, B: Bignum ) return Bignum is ( Big_Div( A, B ) );
-   function "mod" ( A, B: Bignum ) return Bignum is ( Big_Mod( A, B ) );
 
    -- information on a Shuttle; turns out I didn't need all this
    -- but after reading Part 1 I wasn't sure that Part 2 wouldn't want
@@ -66,7 +57,7 @@ procedure Main is
    -- this is possible so long as gcd(a,b)=1
    -- in that case the Extended Euclidean Algorithm will give us the inverse
 
-   function Inverse_Modulo(A, B: Long_Long_Integer) return Long_Long_Integer
+   function Inverse_Modulo(A, B: Big_Integer) return Big_Integer
    -- determines the inverse of a modulo b; that is,
    -- determines the value x such that a * x mod b = 1
    is
@@ -74,7 +65,7 @@ procedure Main is
       S_Prev, T_Prev,
       S_Curr, T_Curr,
       S_Next, T_Next,
-      M, N, Q, R: Long_Long_Integer;
+      M, N, Q, R: Big_Integer;
 
    begin
 
@@ -83,8 +74,8 @@ procedure Main is
 
       S_Prev := 1; T_Prev := 0; S_Curr := 0; T_Curr := 1;
 
-      M := Long_Long_Integer'Max(A, B);
-      N := Long_Long_Integer'Min(A, B);
+      M := Max(A, B);
+      N := Min(A, B);
 
       loop
 
@@ -108,7 +99,7 @@ procedure Main is
 
    end Inverse_Modulo;
 
-   function Crt(A1, A2, M1, M2: Long_Long_Integer) return Long_Long_Integer is
+   function Crt(A1, A2, M1, M2: Big_Integer) return Big_Integer is
    -- Chinese Remainder Theorem:
    -- computes x so that x mod m_i = a_i, so long as gcd( m_1, m_2 ) = 1
    --
@@ -127,13 +118,8 @@ procedure Main is
    --
    --   - now back-substitute: x = [ (a_2 - a_1) * n_1 ] * m_1 + a_1
    (
-      From_Bignum(
-         (
-            To_Bignum(M1) *
-            ( To_Bignum( ( A2 - A1 ) ) *
-              To_Bignum( Inverse_Modulo( M1, M2 ) ) ) + To_Bignum( A1 )
-         )
-         mod ( To_Bignum(M1) * To_Bignum(M2) )
+      (
+        ( M1 * ( ( A2 - A1 ) * Inverse_Modulo( M1, M2 ) ) + A1 ) mod ( M1 * M2 )
       )
    );
 
@@ -266,9 +252,9 @@ begin
 
    declare
 
-      Pos: Positive := 1;
-      Common_Time: Long_Long_Integer := 0;
-      Common_Modulus: Long_Long_Integer := 1;
+      Pos: Big_Integer := 1;
+      Common_Time: Big_Integer := 0;
+      Common_Modulus: Big_Integer := 1;
 
    begin
 
@@ -277,10 +263,10 @@ begin
          if S.In_Service then
 
             Common_Time := Crt(
-                  Common_Time, Long_Long_Integer(-Pos),
-                  Common_Modulus, Long_Long_Integer(S.Value)
+                  Common_Time, -Pos ,
+                  Common_Modulus, To_Big_Integer( S.Value )
             );
-            Common_Modulus := Common_Modulus * Long_Long_Integer(S.Value);
+            Common_Modulus := Common_Modulus * To_Big_Integer( S.Value );
 
          end if;
 

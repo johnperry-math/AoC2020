@@ -34,7 +34,7 @@ Strange regulations about bags that can contain other bags, completed.
 Acquainted myself with `Containers.Maps` and **`for all`** expressions.
 Also learned about initializing records with default values (use `=> <>`).
 On Jeffrey Carter's advice I changed a constant, fixed-length string
-from <style type="text/css">code{white-space: pre-wrap;}`"                    "`</style> to `others => ' '`.
+from `"                    "` to `others => ' '`.
 
 ## Day 8: Handheld Halting
 

@@ -34,7 +34,7 @@ Strange regulations about bags that can contain other bags, completed.
 Acquainted myself with `Containers.Maps` and **`for all`** expressions.
 Also learned about initializing records with default values (use `=> <>`).
 On Jeffrey Carter's advice I changed a constant, fixed-length string
-from "                    " to others => ' '.
+from `"                    "` to `others => ' '`.
 
 ## Day 8: Handheld Halting
 
@@ -84,8 +84,20 @@ which is probably not impressive, but it does amuse me.
 
 Find various intersections of shuttles whose circulation time
 is a prime number of minutes.
-I used variant records to distinguish between shuttles that are in service and
-are not.
+I used variant `record`s (i.e., a discriminant) to distinguish between shuttles
+that are in service and are not.
 Unfortunately, while the answer fits in `Long_Long_Integer`,
 some intermediate expressions do not,
 so I had ("got"?) to use Ada2020's `Ada.Numerics.Big_Numbers` package.
+
+## Day 14: Docking Data
+
+Determine the values or memory to write to, according to a given bit mask.
+Time to use the `mod` types! so that we can `and` and `or`;
+Ada only allows masking with `mod` types; see `Turn_On` and `Turn_Off`.
+Finally found a place to use `renames` where I didn't feel at least a little
+guilty.
+Double-buffered an array using a `mod 2` type, following a recommendation
+on an earlier assignment.
+gnat also surprised me with a (correct) warning that a `String` does not always
+starts at index 1.

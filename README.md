@@ -101,3 +101,8 @@ Double-buffered an array using a `mod 2` type, following a recommendation
 on an earlier assignment.
 gnat also surprised me with a (correct) warning that a `String` does not always
 starts at index 1.
+
+## Day 15: Rambunctious Recitation
+
+Determine the nth number of a relatively simple sequence.
+I didn't come up with anything interesting here.

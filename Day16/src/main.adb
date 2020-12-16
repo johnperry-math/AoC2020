@@ -41,7 +41,13 @@ procedure Main is
       Located: Boolean := False;
    end record;
 
-   -- storage of rules
+   function Value_Satisfies_Rule(Value: Natural; Rule: Ticket_Rule)
+   -- returns True iff Value satisfues Rule
+   return Boolean
+   is
+   ( Value in Rule.Min1 .. Rule.Max1 or Value in Rule.Min2 .. Rule.Max2 );
+
+-- storage of rules
 
    package Ticket_Rule_Vector is new Ada.Containers.Vectors
    (
@@ -136,7 +142,7 @@ procedure Main is
    -- returns the first index of A that is true
       Result: Positive := 1;
    begin
-      for I in A'First .. A'Last loop
+      for I in A'Range loop
          if A(I) then
             Result := I;
             exit;
@@ -162,7 +168,7 @@ begin
    end loop;
 
    Put("there are "); Put(Ticket_Rules.Length'Image); Put(" rules");
-   New_Line(1);
+   New_Line(2);
 
    -- read the tickets
    -- this declare doesn't end until the bitter end!
@@ -184,7 +190,7 @@ begin
 
    begin
 
-      Put("your ticket: "); Put(Your_Ticket'Image); New_Line(1);
+      Put("your ticket: "); Put(Your_Ticket'Image); New_Line(2);
 
       -- part 1: read other tickets, identify erroneous ones
 
@@ -222,8 +228,7 @@ begin
                Valid := False;
 
                for Rule of Ticket_Rules loop
-                  if ( I >= Rule.Min1 and I <= Rule.Max1 )
-                        or ( I >= Rule.Min2 and I <= Rule.Max2 )
+                  if Value_Satisfies_Rule( I, Rule )
                   then
                      Valid := True;
                      exit;
@@ -244,7 +249,7 @@ begin
          end loop Through_Other_Tickets;
 
          Put("error rate is "); Put(Error_Rate, 0);
-         New_Line(1);
+         New_Line(2);
 
       end;
 
@@ -284,29 +289,35 @@ begin
          -- figure out which positions each rule can actually fit into,
          -- using neighbors' valid tickets to eliminate positions
 
+         Each_Rule:
          for Rule_Number in 1 .. Number_Of_Rules loop
 
             Position := 1;
 
+            Each_Position:
             while Position <= Number_Of_Rules loop
+
+               Each_Ticket:
                for Neighbors_Ticket of Other_Tickets loop
+
                   declare
                      Rule: Ticket_Rule_Vector.Reference_Type
                            renames Ticket_Rules(Rule_Number);
                      Value renames Neighbors_Ticket(Position);
                   begin
-                     if (Value < Rule.Min1 or Value > Rule.Max1)
-                           and (Value < Rule.Min2 or Value > Rule.Max2)
-                     then
+                     if not Value_Satisfies_Rule(Value, Rule) then
                         Rule_Matchup(Rule_Number)(Position) := False;
                         exit;
                      end if;
                   end;
-               end loop;
-               Position := Position + 1;
-            end loop;
 
-         end loop;
+               end loop Each_Ticket;
+
+               Position := Position + 1;
+
+            end loop Each_Position;
+
+         end loop Each_Rule;
 
          -- kind of interesting to see that most rules can fit into
          -- several positions (and my first attempt failed because of this)
@@ -349,7 +360,7 @@ begin
 
                      Put(String(Ticket_Rules(Position).Label));
                      Put(" must go to "); Put(Which, 0);
-                     New_Line(1);
+                     New_Line(2);
 
                      if Ticket_Rules(Position).Label(1..9) = "departure" then
                         Product := Product * Long_Integer(Your_Ticket(Which));
@@ -366,7 +377,7 @@ begin
 
                      -- nice to see the progress through the list
                      Report_Rule_Possibilities(Rule_Matchup);
-                     New_Line(2);
+                     New_Line(1);
 
                   end;
 

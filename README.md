@@ -79,11 +79,13 @@ There were also lots of `case` statements.
 In fact, there's not a single `if` statement in the whole program,
 which is probably not impressive, but it does amuse me.
 
+(It's completed.)
+
 
 ## Day 13: Shuttle Search
 
 Find various intersections of shuttles whose circulation time
-is a prime number of minutes.
+is a prime number of minutes, completed.
 I used variant `record`s (i.e., a discriminant) to distinguish between shuttles
 that are in service and are not.
 Unfortunately, while the answer fits in `Long_Long_Integer`,
@@ -92,7 +94,8 @@ so I had ("got"?) to use Ada2020's `Ada.Numerics.Big_Numbers` package.
 
 ## Day 14: Docking Data
 
-Determine the values or memory to write to, according to a given bit mask.
+Determine the values or memory to write to,
+according to a given bit mask, completed.
 Time to use the `mod` types! so that we can `and` and `or`;
 Ada only allows masking with `mod` types; see `Turn_On` and `Turn_Off`.
 Finally found a place to use `renames` where I didn't feel at least a little
@@ -104,5 +107,22 @@ starts at index 1.
 
 ## Day 15: Rambunctious Recitation
 
-Determine the nth number of a relatively simple sequence.
+Determine the nth number of a relatively simple sequence, completed.
 I didn't come up with anything interesting here.
+Kind of disappointed in this puzzle, truth be told.
+
+## Day 16: Ticket Translation
+
+Given specifications for train tickets,
+first determine the invalid tickets.
+Then figure out which specification applies to which position.
+This was my first time using `Ada.Strings.Fixed` and `Find_Token`,
+which may have been overkill in this case.
+It was also my first time using the `&` operator for string concatenation.
+I found that I could have used bitwise operations on an `array of Boolean`
+but settled on a little more straightforward.
+I also used `renames` a bit more, and increasingly respectably.
+Overall though the program strikes me as a bit of a mess.
+
+I guess yesterday's breezer of a puzzle was to give us a rest
+before this one, completed.

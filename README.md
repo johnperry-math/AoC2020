@@ -126,3 +126,11 @@ Overall though the program strikes me as a bit of a mess.
 
 I guess yesterday's breezer of a puzzle was to give us a rest
 before this one, completed.
+
+## Day 17: Conway Cubes
+
+Another variant of the game of life.
+The only new "feature" of "Ada" I discovered today is that
+gnat crashed when I tried to initialize 3- and 4-dimensional
+using complicated aggregates that Ada 202x SHOULD allow.
+So I guess I will report a bug.

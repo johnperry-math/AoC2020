@@ -129,8 +129,18 @@ before this one, completed.
 
 ## Day 17: Conway Cubes
 
-Another variant of the game of life.
-The only new "feature" of "Ada" I discovered today is that
-gnat crashed when I tried to initialize 3- and 4-dimensional
+Another variant of the game of life, completed.
+One new "feature" of "Ada" I discovered today is that
+gnat crashed when I tried to initialize 3- and 4-dimensional arrays
 using complicated aggregates that Ada 202x SHOULD allow.
-So I guess I will report a bug.
+So I guess I will report a bug. (Done!)
+I also made respectable use of negative array indices.
+(Try doing *that* in C/C++.)
+
+
+## Day 18: Operation Order
+
+Evaluate arithmetic expressions in unusual order, completed.
+Nothing really new; I did use functions as parameters.
+This is essentially a very simple exercise from classes in
+Compiler Construction.

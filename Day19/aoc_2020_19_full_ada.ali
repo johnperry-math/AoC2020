@@ -1,0 +1,114 @@
+V "GNAT Lib v2020"
+M P W=b
+P SS ZX
+
+RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_RECURSION
+RV NO_SECONDARY_STACK
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLICIT_LOOPS
+
+U aoc_2020_19_full_ada%b  aoc_2020_19_full_ada.adb  2c20e14f NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20200228061809 76789da1 ada%s
+D a-except.ads		20200228061809 a7106115 ada.exceptions%s
+D a-inteio.ads		20200228061809 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20200228061809 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20200228061809 119b8fb3 ada.streams%s
+D a-tags.ads		20200228061809 edddc8f0 ada.tags%s
+D a-textio.ads		20200228061809 aef4d56d ada.text_io%s
+D a-tiinio.ads		20200228061809 390edddb ada.text_io.integer_io%s
+D a-unccon.ads		20200228061809 0e9b276f ada.unchecked_conversion%s
+D aoc_2020_19_full_ada.adb  20201220040205 749fbd86 aoc_2020_19_full_ada%b
+D interfac.ads		20200228061809 5ab55268 interfaces%s
+D i-cstrea.ads		20200228061809 e53d8b8e interfaces.c_streams%s
+D system.ads		20200228061809 085b6ffb system%s
+D s-crtl.ads		20200228061809 0ebbdb71 system.crtl%s
+D s-exctab.ads		20200228061809 54135002 system.exception_table%s
+D s-ficobl.ads		20200228061809 078245e4 system.file_control_block%s
+D s-parame.ads		20200228061809 4752c4cb system.parameters%s
+D s-secsta.ads		20200327060539 9b3ab94b system.secondary_stack%s
+D s-soflin.ads		20200228061809 a7318a92 system.soft_links%s
+D s-stache.ads		20200228061809 a37c21ec system.stack_checking%s
+D s-stalib.ads		20200228061809 6b7a13f2 system.standard_library%s
+D s-stoele.ads		20200228061809 2dc34a04 system.storage_elements%s
+D s-traent.ads		20200228061809 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20200319060539 5ecf7212 system.unsigned_types%s
+D s-wchcon.ads		20200228061809 1b7d22d2 system.wch_con%s
+G a e
+G c Z b b [aoc_2020_19_full_ada standard 14 11 none]
+X 1 ada.ads
+16K9*Ada 20e8 10|8r6 8r23 10r6 10r31 167r5 169r20
+X 3 a-inteio.ads
+18K13*Integer_Text_IO[8|46] 10|10w10 10r35
+X 7 a-textio.ads
+57K13*Text_IO 727e16 10|8w10 8r27 167r9 169r24
+64P9*File_Type 10|88r37 156r7
+66n23*In_File{66E9} 10|161r14
+114U14*Open 10|161s5
+129U14*Close 10|173s5
+264U14*New_Line 10|149s11 174s21
+270U14*Skip_Line 10|167s17
+279V13*End_Of_Line{boolean} 10|129s21 135s21
+312V13*End_Of_File{boolean} 10|168s15
+378U14*Get 10|93s7 95s9 100s9 109s7 110s7 112s9 114s9 130s13 136s11 139s13
+465U14*Put 10|146s38
+492V13*Get_Line{string} 10|169s32
+508U14*Put_Line 10|83s7
+X 8 a-tiinio.ads
+80U14*Put 10|174s5[3|18]
+X 10 aoc_2020_19_full_ada.adb
+14U11*AoC_2020_19_full_Ada 14b11 178l5 178t25
+16N3 n 107r23
+17a3 fn{string}
+19A8 Rule_Index_List(integer)<integer> 22r36 46r41 47r24
+20N3 submax 22r58
+22A11 Rule_Index_List_Fixed{19A8}<integer> 30r15
+24R8 Rule_Type 24d19 33e13 36r38 57r14
+24b19 is_terminal{boolean} 25r10 59r15 113m22 164m21 165m21
+27e9 leaf{character} 61r32 113m43
+29i9 max{integer} 68r45 74r45 142m18 164m43 165m43
+30a9 sub{22A11} 68r32 72r27 74r27 134m20 164m63 165m63
+31i9 alt{natural} 65r18 72r40 74r35 121m18 138m22 146r25 164m53 165m53
+35N3 max_rule_id 36r22
+36a3 rule(24R8) 57r32 113m9 121m9 121r9 134m11 134r11 138m13 138r13 142m9
+. 142r9 146r16 164m7 165m7
+37b3 verbose{boolean} 82r8 115r12 143r12
+39V12 Is_Valid{boolean} 39b12 39>22 86l7 86t15 169s10
+39a22 s{string} 80r46 83r31
+46V14 Verify{boolean} 46b14 46>22 46>34 64s15 68s18 72s13 74s13 77l9 77t15
+. 80s38
+46a22 s{string} 51r16 53r10 61r15 61r18 64r23 64r26 64r41 68r26 72r21 74r21
+46a34 list{19A8} 47r48 47r54 47r72 49r10 57r38 57r44
+47a7 tail_rule_list{19A8} 64r50 68r52 72r52 74r52
+57r9 r1=57:32{24R8} 59r12 61r29 65r15 68r29 68r42 72r24 72r37 74r24 74r32
+. 74r42
+80b5 is_test_ok{boolean} 83r49 85r12
+88U13 Parse_Rules 88b13 88=26 153l7 153t18 162s5
+88p26 f{7|64P9} 93r12 95r14 100r14 109r12 110r12 112r14 114r14 129r34 130r18
+. 135r34 136r16 139r18
+89U15 Get_Nat 89b15 89<24 102l9 102t16 108s7
+89i24 n{natural} 92m7 99m9 99r14
+90e7 c{character} 93m15 94r13 95m17 98r20 98r33 99r38 100m17
+104e5 c{character} 110m15 111r10 112m17 113r51 123r15 123r30 124r33 130m21
+. 131r24 131r37 132r42 136m19 137r14 139m21
+104e8 sep{character} 109m15 114m17
+105i5 i{integer} 108m16 113r15 121r15 134r17 138r19 142r15 146r22
+105i8 j{integer} 124m13 126m13 132m13 132r18 134r31
+105i11 k{integer} 120m9 128m11 128r16 134r25 138r29 142r25 145r25
+107i9 count{integer}
+145i15 l{integer} 146r31
+155i3 total{natural} 160m5 170m9 170r18 174r10
+156p3 f{7|64P9} 161m11 161r11 162m18 162r18 167r28 168r28 169r42 173m12 173r12
+157a3 Filename{string} 161r23
+159i7 part{integer} 163r8
+

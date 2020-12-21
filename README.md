@@ -144,3 +144,19 @@ Evaluate arithmetic expressions in unusual order, completed.
 Nothing really new; I did use functions as parameters.
 This is essentially a very simple exercise from classes in
 Compiler Construction.
+
+## Day 19: Monster Messages
+
+Verify a message against rules of a grammer, most of which are non-terminal.
+In part 2, two of the rules form a loop.
+
+Completed -- eventually; my first approach was incorrect,
+and I couldn't shake my brain of it.
+I took a glance at Gautier de Montmollin's
+[solution](https://github.com/zertovitch/hac/blob/master/exm/aoc/2020/aoc_2020_19_full_ada.adb)
+(uses HAC Pack, which I don't have), and that helped shake my brain a bit.
+Eventually I worked out a solution that I *think* is different from his.
+
+I did a bit of work with types here, relying on subtypes to define ranges
+for rules and options. I don't think I did enough with types; there should
+have been an Option type. One day I may rewrite this to take that into account.

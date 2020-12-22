@@ -160,3 +160,19 @@ Eventually I worked out a solution that I *think* is different from his.
 I did a bit of work with types here, relying on subtypes to define ranges
 for rules and options. I don't think I did enough with types; there should
 have been an Option type. One day I may rewrite this to take that into account.
+
+## Day 20: Jurassic Jigsaw
+
+Find monsters in monochrome images that have been cut into squares, then
+thrown up in the air & allowed to fall to the ground. Yup: rotations and
+reflections are in play!
+
+Completed, using a LOT of types. It may actually have been overkill.
+The complexity of the code reflects some of the trouble I had with the
+assignment. I've actually simplified it a bit already, but I've also noted
+where I think it should be simplified further.
+
+Made use of constants, rename expressions, a "for" expression to exit a loop,
+references and renames, custom ranges, "for" expressions inside "if"
+expressions, and some other stuff I can't recollect at the moment.
+If I do, I'll update.

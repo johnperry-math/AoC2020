@@ -176,3 +176,15 @@ Made use of constants, rename expressions, a "for" expression to exit a loop,
 references and renames, custom ranges, "for" expressions inside "if"
 expressions, and some other stuff I can't recollect at the moment.
 If I do, I'll update.
+
+Day 21: Allergen Assessment
+
+Identify which ingredients correspond to allergens, and which do not, completed.
+First part asks us to identify the ingredients that do not correspond
+to allergens; second part asks us to identify the correct correspondence and
+report them in order of allergen. Since the initial data does not narrow all
+the ingredients down, we have to do a little work to sort that out.
+(Finally! Back to a relatively easy puzzle.)
+
+Here I relied on ordered maps instead of hash maps. I also instantiated
+a generic sorter. "for all" expressions came in useful again.

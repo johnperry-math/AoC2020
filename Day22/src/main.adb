@@ -26,7 +26,8 @@ with Ada.Containers.Ordered_Sets;
 
 with Ada.Containers.Vectors;
 
-with Ada.Containers.Generic_Array_Sort;
+with Ada.Containers.Synchronized_Queue_Interfaces;
+with Ada.Containers.Bounded_Synchronized_Queues;
 
 procedure Main is
 
@@ -46,8 +47,24 @@ procedure Main is
    -- SECTION
    -- player's decks
 
-   -- I wasn't able to get the library's Queues to work the way I'd like
-   -- (or even to work at all I think) so I implemented my own
+   -- don't know why I couldn't get the queues to work last night,
+   -- but now I have them working for part 1, so I'll keep them
+   --
+   -- still, queues are a pain to copy,
+
+   package Natural_Queue_Interfaces
+         is new Ada.Containers.Synchronized_Queue_Interfaces
+   (
+    Element_Type => Natural
+   );
+
+   package Natural_Queue is new Ada.Containers.Bounded_Synchronized_Queues
+   (
+    Queue_Interfaces => Natural_Queue_Interfaces,
+    Default_Capacity => 52
+   );
+
+   Queue_Deck1, Queue_Deck2: Natural_Queue.Queue;
 
    -- it looks as if the game can be up to 50 cards;
    -- the example is only 10 though
@@ -91,16 +108,35 @@ procedure Main is
    -- this is pretty straightforward, even easy
       Player1_Card, Player2_Card: Natural;
    begin
-      Draw(Decks(1), Player1_Card);
-      Draw(Decks(2), Player2_Card);
+--        Draw(Decks(1), Player1_Card);
+--        Draw(Decks(2), Player2_Card);
+      Queue_Deck1.Dequeue(Player1_Card);
+      Queue_Deck2.Dequeue(Player2_Card);
       if Player1_Card > Player2_Card then
-         Add(Decks(1), Player1_Card);
-         Add(Decks(1), Player2_Card);
+         Queue_Deck1.Enqueue(Player1_Card);
+         Queue_Deck1.Enqueue(Player2_Card);
+--           Add(Decks(1), Player1_Card);
+--           Add(Decks(1), Player2_Card);
       else
-         Add(Decks(2), Player2_Card);
-         Add(Decks(2), Player1_Card);
+         Queue_Deck2.Enqueue(Player2_Card);
+         Queue_Deck2.Enqueue(Player1_Card);
+--           Add(Decks(2), Player2_Card);
+--           Add(Decks(2), Player1_Card);
       end if;
    end Play_Round;
+
+   function Queue_Score(Deck: in out Natural_Queue.Queue) return Natural is
+      Result: Natural := 0;
+      Card: Natural;
+      I: Natural := Natural(Deck.Current_Use);
+   begin
+      while Natural(Deck.Current_Use) /= 0 loop
+         Deck.Dequeue(Card);
+         Result := Result + Card * I;
+         I := I - 1;
+      end loop;
+      return Result;
+   end Queue_Score;
 
    procedure Put(Deck: Card_Deck) is
    -- shows the cards in the deck
@@ -403,6 +439,7 @@ begin
          exit when S = "";
          Get(S, V, Last);
          Add(Decks(1), V);
+         Queue_Deck1.Enqueue(V);
       end;
    end loop;
 
@@ -421,6 +458,7 @@ begin
       begin
          Get(S, V, Last);
          Add(Decks(2), V);
+         Queue_Deck2.Enqueue(V);
       end;
    end loop;
 
@@ -436,14 +474,18 @@ begin
    -- SECTION
    -- part 1: play a complete game and report points
 
-   while Size(Decks(1)) /= 0 and Size(Decks(2)) /= 0 loop
+--     while Size(Decks(1)) /= 0 and Size(Decks(2)) /= 0 loop
+   while Natural(Queue_Deck1.Current_Use) /= 0
+         and Natural(Queue_Deck2.Current_Use) /= 0 loop
       Play_Round;
    end loop;
 
    Put("score after combat: ");
    Put( (
-        if Size(Decks(1)) /= 0 then Score(Decks(1))
-        else Score(Decks(2))
+--          if Size(Decks(1)) /= 0 then Score(Decks(1))
+--          else Score(Decks(2))
+         if Natural(Queue_Deck1.Current_Use) /= 0 then Queue_Score(Queue_Deck1)
+         else Queue_Score(Queue_Deck2)
        ), 0 );
    New_Line;
 

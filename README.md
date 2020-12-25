@@ -198,6 +198,11 @@ which are sort of cool.
 I tried to implement this using Ada's Queues, but that didn't work out so well;
 I kept getting memory errors. Not easily finding any good examples online, or
 even any, really, I implemented a queue using an array and a modular type.
+[**Later update:** I managed to get Ada's Queues working for Part 1, but I
+don't understand why they weren't working last night. I can't figure out how to
+copy them without writing a custom function that enqueues & dequeues everything,
+and that's something I need for Part 2.]
+
 I then used sets to track previous configurations in part 2.
 Some minor bugs meant I didn't quite get part 2 working for quite a while;
 in fact I grew confused with some things Ada told me about equivalent sets,

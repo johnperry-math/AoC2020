@@ -207,11 +207,13 @@ copy-and-paste error, I added a card to the wrong player's deck.
 
 I did discover, rather to my disappointment, that the statements
 
-   type Mod52 is mod 52;
-   A: Mod52 := 50;
-   B: Mod52 := 2;
-   for I in A .. B
-      etc.
+```ada
+type Mod52 is mod 52;
+A: Mod52 := 50;
+B: Mod52 := 2;
+for I in A .. B
+   etc.
+```
 
 ...does not cycle around the way I thought it should.
 

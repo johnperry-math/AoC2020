@@ -188,3 +188,32 @@ the ingredients down, we have to do a little work to sort that out.
 
 Here I relied on ordered maps instead of hash maps. I also instantiated
 a generic sorter. "for all" expressions came in useful again.
+
+Day 22: Crab Combat
+
+Play a game of Combat (essentially the card game "War") with a crab who has
+hitched a ride on your raft. Then modify the rules to allow recursive games,
+which are sort of cool.
+
+I tried to implement this using Ada's Queues, but that didn't work out so well;
+I kept getting memory errors. Not easily finding any good examples online, or
+even any, really, I implemented a queue using an array and a modular type.
+I then used sets to track previous configurations in part 2.
+Some minor bugs meant I didn't quite get part 2 working for quite a while;
+in fact I grew confused with some things Ada told me about equivalent sets,
+and even though I was close to the right answer for a while, I dind't realize
+the problem was a bug in the code that implemented the rules: through a
+copy-and-paste error, I added a card to the wrong player's deck.
+
+I did discover, rather to my disappointment, that the statements
+
+   type Mod52 is mod 52;
+   A: Mod52 := 50;
+   B: Mod52 := 2;
+   for I in A .. B
+      etc.
+
+...does not cycle around the way I thought it should.
+
+I would have liked to use a tagged type for the Decks, to work a little with
+the object-oriented programming in Ada, but I decided against that for now.

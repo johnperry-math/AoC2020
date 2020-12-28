@@ -177,7 +177,7 @@ references and renames, custom ranges, "for" expressions inside "if"
 expressions, and some other stuff I can't recollect at the moment.
 If I do, I'll update.
 
-Day 21: Allergen Assessment
+## Day 21: Allergen Assessment
 
 Identify which ingredients correspond to allergens, and which do not, completed.
 First part asks us to identify the ingredients that do not correspond
@@ -189,7 +189,7 @@ the ingredients down, we have to do a little work to sort that out.
 Here I relied on ordered maps instead of hash maps. I also instantiated
 a generic sorter. "for all" expressions came in useful again.
 
-Day 22: Crab Combat
+## Day 22: Crab Combat
 
 Play a game of Combat (essentially the card game "War") with a crab who has
 hitched a ride on your raft. Then modify the rules to allow recursive games,
@@ -224,3 +224,36 @@ for I in A .. B
 
 I would have liked to use a tagged type for the Decks, to work a little with
 the object-oriented programming in Ada, but I decided against that for now.
+
+## Day 23: Crab Cups
+
+Rearrange a circular list of cups: three cups after the "current" cup
+(which I keep at the head) are removed to a position after the cup whose label
+is one less than the current cup's label (subtracting more if we are removing
+that cup, and cycling to the largest cup label if we go less than 0); then the
+cup that now follows the "current" cup is designated "current".
+
+In part 1, we do this 100 times with 10 cups; in part 2, we do this 10 million
+times with 1 million cups.
+
+Many solutions work, and I bungled into two, but they take hours,
+probably *days* to complete. If you have to copy most of the list repeatedly,
+or if you have to search through most of the list repeatedly,
+you are going to wait a looooooong time.
+For instance, `main_original.adb` and `main_linked_lists.adb` will work,
+but I gave up on both after nearly an hour, or maybe more than an hour,
+once I had the final `main.adb` working in just a couple of seconds!
+See its documentation for details on how it works.
+
+For this puzzle I finally used Ada's `generic` facility to create
+a `generic package`, complete with `private` objects, subprograms,
+and automatic initialization. In retrospect, I'm not sure that's necessary,
+but it was fun, and it does make it easy to keep the intermediate configurations
+hidden from the client.
+
+###Note###
+This program uses an array of 1 million 32-bit integers,
+which causes a stack overflow unless you increase the default stack size.
+On the Mac I used `ulimit -s 13000` after using `gcc`
+with the `-fstack-usage` option to determine how much stack it was using.
+

@@ -251,7 +251,7 @@ and automatic initialization. In retrospect, I'm not sure that's necessary,
 but it was fun, and it does make it easy to keep the intermediate configurations
 hidden from the client.
 
-###Note###
+### Note
 This program uses an array of 1 million 32-bit integers,
 which causes a stack overflow unless you increase the default stack size.
 On the Mac I used `ulimit -s 13000` after using `gcc`

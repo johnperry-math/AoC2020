@@ -257,3 +257,10 @@ which causes a stack overflow unless you increase the default stack size.
 On the Mac I used `ulimit -s 13000` after using `gcc`
 with the `-fstack-usage` option to determine how much stack it was using.
 
+## Day 24: Lobby Layout
+
+A hexagonal floor layout. The size of the floor is not given, so I guessed,
+got part 2 wrong the first time, made it larger on my second guess, and got it.
+Employed a `tagged record`, albeit without extension / inheritance.
+"Exported" an enumeration by reading & realizing that its name is actually
+a function, so we simply need to rename the function.

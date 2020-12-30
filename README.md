@@ -133,7 +133,8 @@ Another variant of the game of life, completed.
 One new "feature" of "Ada" I discovered today is that
 gnat crashed when I tried to initialize 3- and 4-dimensional arrays
 using complicated aggregates that Ada 202x SHOULD allow.
-So I guess I will report a bug. (Done!)
+So I guess I will report a bug.
+(Done! -- update: AdaCore acknowledged bug and says it's fixed in next version.)
 I also made respectable use of negative array indices.
 (Try doing *that* in C/C++.)
 
@@ -152,8 +153,8 @@ In part 2, two of the rules form a loop.
 
 Completed -- eventually; my first approach was incorrect,
 and I couldn't shake my brain of it.
-I took a glance at Gautier de Montmollin's
-[solution](https://github.com/zertovitch/hac/blob/master/exm/aoc/2020/aoc_2020_19_full_ada.adb)
+I took a glance at
+[Gautier de Montmollin's solution](https://github.com/zertovitch/hac/blob/master/exm/aoc/2020/aoc_2020_19_full_ada.adb)
 (uses HAC Pack, which I don't have), and that helped shake my brain a bit.
 Eventually I worked out a solution that I *think* is different from his.
 
@@ -167,14 +168,15 @@ Find monsters in monochrome images that have been cut into squares, then
 thrown up in the air & allowed to fall to the ground. Yup: rotations and
 reflections are in play!
 
-Completed, using a LOT of types. It may actually have been overkill.
+Completed, using a **lot** of types. It may actually have been overkill.
 The complexity of the code reflects some of the trouble I had with the
 assignment. I've actually simplified it a bit already, but I've also noted
 where I think it should be simplified further.
 
-Made use of constants, rename expressions, a "for" expression to exit a loop,
-references and renames, custom ranges, "for" expressions inside "if"
-expressions, and some other stuff I can't recollect at the moment.
+Made use of constants, `rename` expressions,
+a `for` expression to `exit` a `loop`,
+custom ranges, `for` expressions inside `if` expressions,
+and some other stuff I can't recollect at the moment.
 If I do, I'll update.
 
 ## Day 21: Allergen Assessment
@@ -194,6 +196,8 @@ a generic sorter. "for all" expressions came in useful again.
 Play a game of Combat (essentially the card game "War") with a crab who has
 hitched a ride on your raft. Then modify the rules to allow recursive games,
 which are sort of cool.
+
+Completed.
 
 I tried to implement this using Ada's Queues, but that didn't work out so well;
 I kept getting memory errors. Not easily finding any good examples online, or
@@ -227,7 +231,8 @@ the object-oriented programming in Ada, but I decided against that for now.
 
 ## Day 23: Crab Cups
 
-Rearrange a circular list of cups: three cups after the "current" cup
+Rearrange a circular list of cups, completed.
+Rule: three cups after the "current" cup
 (which I keep at the head) are removed to a position after the cup whose label
 is one less than the current cup's label (subtracting more if we are removing
 that cup, and cycling to the largest cup label if we go less than 0); then the
@@ -259,8 +264,22 @@ with the `-fstack-usage` option to determine how much stack it was using.
 
 ## Day 24: Lobby Layout
 
-A hexagonal floor layout. The size of the floor is not given, so I guessed,
+A hexagonal floor layout, completed.
+The size of the floor is not given, so I guessed,
 got part 2 wrong the first time, made it larger on my second guess, and got it.
 Employed a `tagged record`, albeit without extension / inheritance.
 "Exported" an enumeration by reading & realizing that its name is actually
 a function, so we simply need to rename the function.
+Again used negative array indices.
+
+It's a really good idea to look at
+[Maxim Reznik's solution](https://github.com/reznikmm/ada-howto/blob/advent-2020/md/24/24.md),
+immensely elegant in too many ways to list here,
+in particular its use of `Ada.Containers.Maps`
+to avoid guessing the size of the floor.
+
+## Day 25: Combo Breaker
+
+I'm kind of surprised he didn't call it "Hotel Hacking".
+This turned out to be an easy problem, one loop followed by an exponentiation.
+Completed, using a modular type and the `**` operator for exponentiation.
